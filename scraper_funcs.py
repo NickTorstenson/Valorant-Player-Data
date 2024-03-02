@@ -6,8 +6,6 @@ import requests
 import requests.api
 import pandas as pd
 from bs4 import BeautifulSoup
-import glob
-import os
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -946,105 +944,4 @@ def load_soup_file(filename: str, directory: str, debug: bool = False) -> Beauti
     return soup
 
 
-americas = [
-    2406,
-    6961,
-    2359,
-    188,
-    7389,
-    1034,
-    2,
-    120,
-    5248,
-    2355,
-    11058
-]
-emea = [
-    2593,
-    1184,
-    474,
-    4915,
-    2059,
-    2304,
-    1001,
-    7035,
-    8877,
-    397,
-    12694
-]
-pacific =[
-    8185,
-    624,
-    17,
-    6199,
-    14,
-    5448,
-    878,
-    918,
-    278,
-    8304,
-    6387
-]
-china = [
-    1119,
-    12010,
-    1120,
-    11328,
-    13576,
-    12064,
-    12685,
-    14137,
-    731,
-    13790,
-    11981
-]
-
-# What regions to scrape
-all_regions = americas + emea + pacific + china
-
-# How many historical matches to scrape
-AMOUNT = 3
-SOUPS_DIRECTORY = '/Users/nickt/Documents/Coding/Python Projects/Valorant Player Data/Match Soup Files'
-PLAYER_DATA_DIRECTORY = '/Users/nickt/Documents/Coding/Python Projects/Valorant Player Data/Player Data'
-
-
-if True:    
-    # Get a list of all CSV files in the directory
-    csv_files = glob.glob(os.path.join(PLAYER_DATA_DIRECTORY, '*.csv'))
-
-    # Sort the files by modification time in descending order
-    sorted_files = sorted(csv_files, key=os.path.getmtime, reverse=True)
-
-    # Get the path of the most recent CSV file
-    most_recent_file = sorted_files[0]
-
-    # Read the most recent player data
-    most_recent_player_data = pd.DataFrame(pd.read_csv(most_recent_file))
-    
-    scraped_matches = most_recent_player_data.match_id.to_list()
-    scraped_matches = list(set(scraped_matches))
-
-    match_data_list = []
-    unique_matches = []
-    matches = []
-    failed_match_ids = [283388]
-    for team in all_regions:
-        matches += get_team_match_ids(team, AMOUNT)
-        unique_matches = list(set(matches))
-        print(len(unique_matches))
-    unique_matches = [int(match) for match in unique_matches]
-    new_matches = [match_id for match_id in unique_matches if match_id not in scraped_matches and match_id not in failed_match_ids]
-    
-    if len(new_matches) == 0:
-        print("No new matches to scrape")
-        exit()
-    
-    match_datas = get_match_datas(new_matches, soups_directory='/Users/nickt/Documents/Coding/Python Projects/Valorant Player Data/Match Soup Files')
-    match_datas = pd.DataFrame(match_datas)
-    match_datas = match_datas._append(most_recent_player_data, ignore_index=True)
-        
-    current_date = pd.to_datetime('today').strftime('%m-%d-%y')
-
-    match_datas.to_csv(f'Valorant Player Data/Player Data/All_Region({current_date}).csv', index=False)
-    match_datas.to_csv(f'/Users/nickt/Documents/Local UW Files/STAT240/data/val_data.csv', index=False)
 
