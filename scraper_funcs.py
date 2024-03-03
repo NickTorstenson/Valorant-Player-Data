@@ -205,7 +205,7 @@ def get_match_data(match_soup: BeautifulSoup = False, match_id: int = None, soup
         game_map = get_game_map(game_soup)
         rounds_played = get_game_rounds_played(game_soup)
         
-        performance_stats = get_game_performance(match_id=match_id, game_index=game_index)
+        performance_stats = get_game_performance(match_id=match_id, game_index=game_index, soups_directory=soups_directory)
         performance_stats = performance_stats.merge(pd.DataFrame(player_names, columns=['player_name']), on='player_name', how='right')
         game_score = get_game_score(game_soup)
         round_difference = int(game_score.split(':')[0]) - int(game_score.split(':')[1])
@@ -844,16 +844,16 @@ def get_team_match_ids(team_id: int, amount: int = 1) -> list:
             match_ids.append(match.get("href").split('/')[1])
     return match_ids[0:amount]
 
-def get_game_performance(match_id: int, game_index: int, player_index: int = False, stat_column: str = False) -> list:    
+def get_game_performance(match_id: int, game_index: int, soups_directory: str, player_index: int = False, stat_column: str = False) -> list:    
     
     try:
         #print("Attempting to load performance soup from file")
-        performance_soup = load_performance_soup(match_id, SOUPS_DIRECTORY)
+        performance_soup = load_performance_soup(match_id, soups_directory)
     except FileNotFoundError:
         print(f"Perf soup not found for match ({match_id}) - Requesting from VLR")
         performance_soup = get_soup(str(match_id) + '/?tab=performance')
         print("Saving match soup to file")
-        save_performance_soup(match_id, performance_soup, SOUPS_DIRECTORY)
+        save_performance_soup(match_id, performance_soup, soups_directory)
     
     #performance_html = performance_soup.find_all(class_="wf-table-inset mod-adv-stats")[1:]
     #performance_table = performance_html[game_index].find_all('td')

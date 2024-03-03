@@ -4841,3 +4841,4 @@ Match Soup Files/307574-perftab.txt
 Match Soup Files/307574.txt
 soupseparator.py
 scraper-script.py
+*.txt
