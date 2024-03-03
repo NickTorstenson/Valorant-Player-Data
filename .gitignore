@@ -3,5 +3,4 @@ soupseparator.py
 scraper-script.py
 __pycache__/
 *.txt
-git rm --cached .DS_Store
-
+.DS_Store
