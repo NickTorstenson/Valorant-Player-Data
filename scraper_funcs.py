@@ -687,7 +687,6 @@ def get_game_stats(game_soup: BeautifulSoup, player_index: int = False, stat_col
                     
             table_output.append(row_data)
     player_stat_list = pd.DataFrame(table_output, columns=columns)
-    player_stat_list.to_csv('test_stats.csv')
     return player_stat_list
 
 
