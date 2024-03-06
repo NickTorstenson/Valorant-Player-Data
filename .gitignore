@@ -6,3 +6,4 @@ __pycache__/
 .DS_Store
 
 match_ids.csv
+scraper_funcs.py
