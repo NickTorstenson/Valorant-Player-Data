@@ -7,3 +7,4 @@ __pycache__/
 
 match_ids.csv
 scraper_funcs.py
+csv_to_database.py
