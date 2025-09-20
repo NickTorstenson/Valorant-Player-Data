@@ -21,7 +21,7 @@ Each match can have many "games" or "maps within it.
 
 `match_id`: ...
 
-**Columns:**
+### **Columns:**
 
 * **`match_id` (int):** The match ID for the match as on vlr.gg/`match_id`.
 * **`match_event` (str):** The event in which the match took place.
