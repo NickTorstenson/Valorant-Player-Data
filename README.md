@@ -24,6 +24,9 @@ Each match can have many "games" or "maps within it.
 **Columns:**
 
 * **`match_id` (int):** The match ID for the match as on vlr.gg/`match_id`.
+* **`match_event` (str):** The event in which the match took place.
+* **`event_id` (str):** The ID of the event in which the match took place ans on vlr.gg/`event_id`.
+* **`match_link` (str):** The link to the vlr match page.
 * **`match_date` (str):** The date the match took place.
 * **`match_score` (str):** The final score of the series "[TEAM 1]:[TEAM 2]".
 * **`game_index` (int):** The index of the game in the series (0 = Game 1, 1 = Game 2, etc...).
